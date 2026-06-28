@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { pb } from "../utils/pb.js";
+import { pb } from "../shared/api/pb.js";
 
 function nowDate() {
   const d = new Date();

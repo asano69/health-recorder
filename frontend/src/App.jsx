@@ -1,7 +1,7 @@
 import { Router, Route } from "@solidjs/router";
-import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
-import Sleep from "./pages/Sleep.jsx";
+import Home from "./home/HomePage.jsx";
+import About from "./about/AboutPage.jsx";
+import Sleep from "./sleep/SleepPage.jsx";
 
 
 export default function App() {
