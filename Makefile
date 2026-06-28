@@ -56,8 +56,8 @@ clean:
 	#cd backend && go mod tidy
 
 server: kill-ports build
-	./bin/my-app superuser upsert admin@mail.internal password --dir=pb_data
-	./bin/my-app serve --http=0.0.0.0:3000 --dir=pb_data
+	./bin/$(APP_NAME) superuser upsert admin@mail.internal password --dir=pb_data
+	./bin/$(APP_NAME) serve --http=0.0.0.0:3000 --dir=pb_data
 
 # pb_dataについて
 # ---------------
