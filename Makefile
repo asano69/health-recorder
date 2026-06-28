@@ -1,4 +1,4 @@
-.PHONY: init dev kill-ports
+.PHONY: init dev kill-ports update
 
 BACKEND_PORT  := 3000
 FRONTEND_PORT := 3001
