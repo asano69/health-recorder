@@ -1,15 +1,24 @@
 import { createSignal } from "solid-js";
 import { pb } from "../utils/pb.js";
 
-// Returns current datetime formatted for <input type="datetime-local"> (YYYY-MM-DDTHH:mm).
-// toISOString() gives UTC, so we subtract the timezone offset to get local time.
-function nowLocal() {
+function nowDate() {
   const d = new Date();
-  return new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function nowTime() {
+  const d = new Date();
+  const hh = String(d.getHours()).padStart(2, "0");
+  const min = String(d.getMinutes()).padStart(2, "0");
+  return `${hh}:${min}`;
 }
 
 export default function Sleep() {
-  const [date, setDate] = createSignal(nowLocal());
+  const [date, setDate] = createSignal(nowDate());
+  const [time, setTime] = createSignal(nowTime());
   const [quality, setQuality] = createSignal("3");
   const [tags, setTags] = createSignal("");
 
@@ -18,7 +27,8 @@ export default function Sleep() {
 
     try {
       await pb.collection("sleep_logs").create({
-        date: new Date(date()).toISOString(),
+        date: date(),
+        time: time(),
         quality: Number(quality()),
         tags: tags()
           .split(",")
@@ -26,7 +36,8 @@ export default function Sleep() {
           .filter(Boolean),
       });
 
-      setDate(nowLocal());
+      setDate(nowDate());
+      setTime(nowTime());
       setQuality("3");
       setTags("");
     } catch (error) {
@@ -40,9 +51,15 @@ export default function Sleep() {
       <h1>Sleep Log</h1>
       <form onSubmit={addLog}>
         <input
-          type="datetime-local"
+          type="date"
           value={date()}
           onInput={(e) => setDate(e.currentTarget.value)}
+          required
+        />
+        <input
+          type="time"
+          value={time()}
+          onInput={(e) => setTime(e.currentTarget.value)}
           required
         />
         <select
