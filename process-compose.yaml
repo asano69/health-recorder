@@ -1,0 +1,9 @@
+processes:
+  health-recorder:
+    command: ./bin/my-app serve --http=0.0.0.0:50000 --dir=pb_data
+# バックグラウンドで起動
+# process-compose up -d
+# 状態確認・ログ閲覧
+# process-compose attach
+# 停止
+# process-compose down
